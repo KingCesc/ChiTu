@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <contextName>logback</contextName>
+    <springProperty scope="context" name="springAppName" source="spring.application.name"/>
+    <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
+    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener"/>
+    <!--    <include resource="org/springframework/boot/logging/logback/base.xml"/>-->
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <withJansi>true</withJansi>
+        <encoder>
+            <pattern>
+                %red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger) - %cyan(%msg%n)
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${user.home}/logs/chitu-tk.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] [%-5level] %logger - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${user.home}/logs/chitu-tk.%d.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <root>
+        <level value="DEBUG"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+
+</configuration>
